@@ -57,7 +57,93 @@ function Home(){
 }
 function About(){return <><PageIntro eyebrow="ABOUT SKYNET" title="Helping learners build confidence with computers." desc="Skynet Computer Education is a computer training institute based in Rasikpur, Dumka, focused on practical computer learning."/><section className="section"><div className="container story-grid"><div className="story-image tall"><img src={image.study} alt="Students learning together" /></div><div className="story-copy"><SectionTitle eyebrow="WHO WE ARE" title="Practical learning for a digital world" desc="Our aim is to make computer education approachable and useful. Students can explore foundational computer applications, accounting tools, design, programming and typing courses."/><p className="body-copy">Whether you are starting from the basics or looking to build a specific skill, speak with the institute to understand the current course structure and choose a suitable path.</p><a className="btn btn-primary" href={wa()} target="_blank" rel="noreferrer">Talk to the institute <ArrowUpRight size={17}/></a></div></div></section><section className="section section-soft"><div className="container"><SectionTitle eyebrow="WHAT MATTERS HERE" title="A supportive place to learn" center/><div className="values-grid"><div><ShieldCheck/><h3>Clear guidance</h3><p>Get course information directly from the institute before enrolling.</p></div><div><Laptop/><h3>Practical access</h3><p>Individual computer systems are provided during lab sessions.</p></div><div><Users/><h3>Learning support</h3><p>Learn with guidance from the institute's teaching team.</p></div></div></div></section><CTA/></>}
 function Courses(){const [filter,setFilter]=useState('All courses');const cats=['All courses','Diploma programmes','Professional courses','Short-term skills','Programming','Typing'];const shown=filter==='All courses'?courses: courses.filter(c=>c.category===filter);return <><PageIntro eyebrow="COURSE CATALOGUE" title="Find the skills you want to build." desc="Explore computer application, accounting, design, programming and typing courses offered by Skynet Computer Education."/><section className="section"><div className="container"><div className="filter-row">{cats.map(x=><button key={x} className={filter===x?'filter-chip active':'filter-chip'} onClick={()=>setFilter(x)}>{x}</button>)}</div><div className="course-grid">{shown.map(c=><CourseCard key={c.slug} course={c}/>)}</div><div className="notice-box"><ShieldCheck/><div><b>Need exact course details?</b><p>Course fees, duration, eligibility and the latest syllabus are confirmed by the institute. Contact the team before enrolling.</p></div></div></div></section><CTA title="Not sure which course to choose?" desc="Tell us what you want to learn. Our team can help you explore the available options."/></>}
-function CourseDetail(){const {slug}=useParams();const course=courses.find(c=>c.slug===slug);if(!course)return <PageIntro eyebrow="COURSE NOT FOUND" title="We couldn't find that course." desc="Browse the complete course catalogue to explore available options."/>;const Icon=course.icon;return <><PageIntro eyebrow={course.category.toUpperCase()} title={course.name} desc={course.full}/><section className="section"><div className="container detail-grid"><div className="detail-main"><div className="detail-icon"><Icon size={30}/></div><div className="eyebrow">ABOUT THIS COURSE</div><h2>{course.full}</h2><p className="body-copy">{course.desc}</p><h3>Learning areas</h3><p className="muted">The topics below are indicative learning areas, not a confirmed institute syllabus. Ask the institute for the current module list.</p><ul className="check-list">{course.learn.map(x=><li key={x}><CheckCircle2/>{x}</li>)}</ul><div className="notice-box"><Clock3/><div><b>Duration, fees and eligibility</b><p>Contact the institute for current details. These details have not yet been confirmed for publication.</p></div></div></div><aside className="enquiry-card"><span className="course-tag">{course.category}</span><h3>Interested in {course.name}?</h3><p>Get the latest syllabus, duration, fees and admission information directly from the institute.</p><a className="btn btn-primary full" href={wa(`Hello, I am interested in the ${course.name} course at Skynet Computer Education. Please share the current syllabus, duration, fees and admission details.`)} target="_blank" rel="noreferrer">Enquire about this course <ArrowUpRight size={17}/></a><a className="phone-link" href="tel:+917739574670"><Phone size={16}/> +91 77395 74670</a><Link className="text-link" to="/courses">← Back to all courses</Link></aside></div></div></section><CTA/></>}
+function CourseDetail() {
+  const { slug } = useParams();
+  const course = courses.find((item) => item.slug === slug);
+
+  if (!course) {
+    return (
+      <PageIntro
+        eyebrow="COURSE NOT FOUND"
+        title="We couldn't find that course."
+        desc="Browse the complete course catalogue to explore available options."
+      />
+    );
+  }
+
+  const Icon = course.icon;
+
+  return (
+    <>
+      <PageIntro
+        eyebrow={course.category.toUpperCase()}
+        title={course.name}
+        desc={course.full}
+      />
+      <section className="section">
+        <div className="container">
+          <div className="detail-grid">
+            <div className="detail-main">
+              <div className="detail-icon">
+                <Icon size={30} />
+              </div>
+              <div className="eyebrow">ABOUT THIS COURSE</div>
+              <h2>{course.full}</h2>
+              <p className="body-copy">{course.desc}</p>
+              <h3>Learning areas</h3>
+              <p className="muted">
+                The topics below are indicative learning areas, not a confirmed
+                institute syllabus. Ask the institute for the current module list.
+              </p>
+              <ul className="check-list">
+                {course.learn.map((item) => (
+                  <li key={item}>
+                    <CheckCircle2 />
+                    {item}
+                  </li>
+                ))}
+              </ul>
+              <div className="notice-box">
+                <Clock3 />
+                <div>
+                  <b>Duration, fees and eligibility</b>
+                  <p>
+                    Contact the institute for current details. These details
+                    have not yet been confirmed for publication.
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            <aside className="enquiry-card">
+              <span className="course-tag">{course.category}</span>
+              <h3>Interested in {course.name}?</h3>
+              <p>
+                Get the latest syllabus, duration, fees and admission information
+                directly from the institute.
+              </p>
+              <a
+                className="btn btn-primary full"
+                href={wa(`Hello, I am interested in the ${course.name} course at Skynet Computer Education. Please share the current syllabus, duration, fees and admission details.`)}
+                target="_blank"
+                rel="noreferrer"
+              >
+                Enquire about this course <ArrowUpRight size={17} />
+              </a>
+              <a className="phone-link" href="tel:+917739574670">
+                <Phone size={16} /> +91 77395 74670
+              </a>
+              <Link className="text-link" to="/courses">
+                ← Back to all courses
+              </Link>
+            </aside>
+          </div>
+        </div>
+      </section>
+      <CTA />
+    </>
+  );
+}
 function Faculty(){return <><PageIntro eyebrow="MEET THE TEAM" title="Guidance for every step of learning." desc="Get to know the instructors at Skynet Computer Education. Faculty profiles and photographs can be expanded with verified information."/><section className="section"><div className="container faculty-grid">{['Vivek Sir','Nathanial Sir','Vidyut Sir'].map((n,i)=><article className="faculty-card" key={n}><div className="faculty-placeholder"><Users size={48}/><span>FACULTY PROFILE</span></div><div className="faculty-card-copy"><span className="eyebrow">INSTRUCTOR · 0{i+1}</span><h3>{n}</h3><p>Computer education faculty at Skynet. Contact the institute for subjects and class schedules.</p></div></article>)}</div><p className="small-note">Faculty photographs, qualifications and subject specializations will be added after confirmation by the institute.</p></section><CTA/></>}
 function Facilities(){const items=[['Individual computer systems','Each student is provided an individual computer during lab sessions.',image.lab,Monitor],['AC classrooms','A more comfortable classroom environment for focused learning.',image.classroom,Zap],['UPS power backup','UPS support helps keep practical sessions running during power interruptions.',image.desk,ShieldCheck],['Study material','Free notes and course essentials are provided as described by the institute.',image.study,BookOpen]];return <><PageIntro eyebrow="LEARNING ENVIRONMENT" title="Facilities that support practical learning." desc="Explore the facilities shared by Skynet Computer Education. Actual institute photographs will replace the illustrative images before launch."/><section className="section"><div className="container facility-list">{items.map(([title,desc,img,Icon],i)=><article className={i%2?'facility-row reverse':'facility-row'} key={title}><div className="facility-photo"><img src={img} alt={title}/></div><div className="facility-copy"><span className="facility-index">0{i+1}</span><Icon/><h2>{title}</h2><p>{desc}</p></div></article>)}</div></section><CTA/></>}
 function Gallery(){const imgs=[image.lab,image.classroom,image.study,image.coding,image.desk,image.hero];return <><PageIntro eyebrow="CAMPUS GALLERY" title="A glimpse into learning at Skynet." desc="This gallery currently uses illustrative images. The institute's real classrooms, computer lab, events and student photographs will be added after collection and approval."/><section className="section"><div className="container gallery-grid">{imgs.map((src,i)=><div className={i===0||i===5?'gallery-item large':'gallery-item'} key={src}><img src={src} alt={['Computer workspace','Classroom','Students learning','Technology teamwork','Computer workstation','Digital learning'][i]}/><span>{['Computer lab','Classroom','Learning together','Technology','Computer practice','Learning'][i]}</span></div>)}</div><div className="container gallery-note"><Sparkles/><span>Institute photographs coming soon — these sample visuals are placeholders, not photographs of the Skynet campus.</span></div></section><CTA/></>}
